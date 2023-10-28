@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Profile</title>
+</head>
+<body>
+    <h2>Edit Your Profile</h2>
+    <form method="POST" action="{{ url_for('edit_profile') }}">
+        <label for="new_username">New Username:</label>
+        <input type="text" name="new_username" id="new_username" required>
+        <br>
+        <label for="new_password">New Password:</label>
+        <input type="password" name="new_password" id="new_password" required>
+        <br>
+        <input type="submit" value="Save Changes">
+    </form>
+    <br>
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html>

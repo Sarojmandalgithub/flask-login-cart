@@ -9,6 +9,32 @@ client = MongoClient('mongodb+srv://saroj8520:Saroj1996@cluster0.qpmtwfy.mongodb
 db = client['user_db']
 users_collection = db['users']
 
+products = [
+    {"id": 1, "name": "Product 1", "price": 10.00},
+    {"id": 2, "name": "Product 2", "price": 20.00},
+    # Add more products as needed
+]
+
+@app.route('/')
+def index():
+    return render_template('index.html', products=products)
+
+@app.route('/add_to_cart/<int:product_id>')
+def add_to_cart(product_id):
+    product = next((p for p in products if p["id"] == product_id), None)
+    if product:
+        cart = session.get('cart', [])
+        cart.append(product)
+        session['cart'] = cart
+    return redirect(url_for('index'))
+
+@app.route('/view_cart')
+def view_cart():
+    cart = session.get('cart', [])
+    total = sum(item['price'] for item in cart)
+    return render_template('cart.html', cart=cart, total=total)
+
+
 @app.route('/')
 def landing_page():
     if 'user' in session:
